@@ -58,6 +58,7 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+        UpdateBestScoreText();
     }
 
     void AddPoint(int point)
@@ -68,7 +69,7 @@ public class MainManager : MonoBehaviour
 
     void UpdateBestScoreText()
     {
-        Debug.Log($"Best Score: {GameManager.Instance.bestPlayer} : {GameManager.Instance.bestScore}");
+        //Debug.Log($"Best Score: {GameManager.Instance.bestPlayer} : {GameManager.Instance.bestScore}");
         BestScoreText.text = $"Best Score: {GameManager.Instance.bestPlayer} : {GameManager.Instance.bestScore}";
     }
 

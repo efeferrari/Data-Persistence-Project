@@ -64,13 +64,6 @@ public class GameManager : MonoBehaviour
     {
         SavedData data = GetSavedData();
 
-        Debug.Log("UPD BEST");
-
-        Debug.Log("Current Player: " + username);
-        Debug.Log("Current Score: " + currentScore);
-
-        Debug.Log("Best Score: " + data.bestScore);
-
         if (currentScore > data.bestScore)
         {
             bestPlayer = username;
