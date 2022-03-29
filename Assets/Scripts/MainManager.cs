@@ -11,14 +11,11 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text BestScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
-    private int m_Points;
-    
-    private bool m_GameOver = false;
-
-    
+     
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +42,7 @@ public class MainManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 m_Started = true;
+                GameManager.Instance.ResetScore();
                 float randomDirection = Random.Range(-1.0f, 1.0f);
                 Vector3 forceDir = new Vector3(randomDirection, 1, 0);
                 forceDir.Normalize();
@@ -53,7 +51,7 @@ public class MainManager : MonoBehaviour
                 Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
             }
         }
-        else if (m_GameOver)
+        else if (GameManager.Instance.isGameOver)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -64,13 +62,25 @@ public class MainManager : MonoBehaviour
 
     void AddPoint(int point)
     {
-        m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        GameManager.Instance.currentScore += point;
+        ScoreText.text = $"Score : {GameManager.Instance.currentScore}";
+    }
+
+    void UpdateBestScoreText()
+    {
+        Debug.Log($"Best Score: {GameManager.Instance.bestPlayer} : {GameManager.Instance.bestScore}");
+        BestScoreText.text = $"Best Score: {GameManager.Instance.bestPlayer} : {GameManager.Instance.bestScore}";
     }
 
     public void GameOver()
     {
-        m_GameOver = true;
+        GameManager.Instance.isGameOver = true;
         GameOverText.SetActive(true);
+
+        // Persist game results
+        GameManager.Instance.SaveData();
+
+        // Update best score
+        UpdateBestScoreText();
     }
 }
